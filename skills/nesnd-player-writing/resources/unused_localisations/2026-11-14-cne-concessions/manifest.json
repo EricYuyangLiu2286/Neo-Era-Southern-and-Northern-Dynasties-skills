@@ -1,0 +1,70 @@
+{
+ "batch": "2026-11-14-cne-concessions",
+ "reason": "nesnd_cne_confidence.4「共和军归降」由 nesnd_cne_confidence.7「再次击败共和主义者」取代，两条击败路径共用新事件。",
+ "keys": [
+  {
+   "key": "nesnd_cne_confidence.4.t",
+   "language": "simp_chinese",
+   "source_file": "localization/simp_chinese/replace/nesnd_cne_land_reform_l_simp_chinese.yml",
+   "event": "nesnd_cne_confidence.4",
+   "author_class": "ai",
+   "still_shared_in_game": false
+  },
+  {
+   "key": "nesnd_cne_confidence.4.d",
+   "language": "simp_chinese",
+   "source_file": "localization/simp_chinese/replace/nesnd_cne_land_reform_l_simp_chinese.yml",
+   "event": "nesnd_cne_confidence.4",
+   "author_class": "ai",
+   "still_shared_in_game": false
+  },
+  {
+   "key": "nesnd_cne_confidence.4.f",
+   "language": "simp_chinese",
+   "source_file": "localization/simp_chinese/replace/nesnd_cne_land_reform_l_simp_chinese.yml",
+   "event": "nesnd_cne_confidence.4",
+   "author_class": "ai",
+   "still_shared_in_game": false
+  },
+  {
+   "key": "nesnd_cne_confidence.4.a",
+   "language": "simp_chinese",
+   "source_file": "localization/simp_chinese/replace/nesnd_cne_land_reform_l_simp_chinese.yml",
+   "event": "nesnd_cne_confidence.4",
+   "author_class": "ai",
+   "still_shared_in_game": false
+  },
+  {
+   "key": "nesnd_cne_confidence.4.t",
+   "language": "english",
+   "source_file": "localization/english/replace/nesnd_cne_land_reform_l_english.yml",
+   "event": "nesnd_cne_confidence.4",
+   "author_class": "ai",
+   "still_shared_in_game": false
+  },
+  {
+   "key": "nesnd_cne_confidence.4.d",
+   "language": "english",
+   "source_file": "localization/english/replace/nesnd_cne_land_reform_l_english.yml",
+   "event": "nesnd_cne_confidence.4",
+   "author_class": "ai",
+   "still_shared_in_game": false
+  },
+  {
+   "key": "nesnd_cne_confidence.4.f",
+   "language": "english",
+   "source_file": "localization/english/replace/nesnd_cne_land_reform_l_english.yml",
+   "event": "nesnd_cne_confidence.4",
+   "author_class": "ai",
+   "still_shared_in_game": false
+  },
+  {
+   "key": "nesnd_cne_confidence.4.a",
+   "language": "english",
+   "source_file": "localization/english/replace/nesnd_cne_land_reform_l_english.yml",
+   "event": "nesnd_cne_confidence.4",
+   "author_class": "ai",
+   "still_shared_in_game": false
+  }
+ ]
+}

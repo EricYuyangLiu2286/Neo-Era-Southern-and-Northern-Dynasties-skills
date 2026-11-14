@@ -1,0 +1,6 @@
+interface:
+  display_name: "NESND 修复"
+  short_description: "读 error.log、修报错与玩法缺陷"
+  default_prompt: "使用 $nesnd-fix：先做 nesnd-victoria3 开头的开工前检查，再按本技能的必读文件完成任务。"
+policy:
+  allow_implicit_invocation: true

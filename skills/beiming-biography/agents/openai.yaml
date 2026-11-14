@@ -1,0 +1,4 @@
+interface:
+  display_name: "北明人物列传"
+  short_description: "按作者文风考据架空时代，撰写有制度约束、人物言语与因果的列传"
+  default_prompt: "使用 $beiming-biography，依据我给出的剧情、人物小纲与最新设定，考据并撰写 Markdown 人物列传，另列必要的创作依据。"

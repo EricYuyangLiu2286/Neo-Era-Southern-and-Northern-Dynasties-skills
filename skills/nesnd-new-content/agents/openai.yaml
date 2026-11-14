@@ -1,0 +1,6 @@
+interface:
+  display_name: "NESND 新内容"
+  short_description: "新建或扩写日志、事件、按钮、路线与地图"
+  default_prompt: "使用 $nesnd-new-content：先做 nesnd-victoria3 开头的开工前检查，再按本技能的必读文件完成任务。"
+policy:
+  allow_implicit_invocation: true
