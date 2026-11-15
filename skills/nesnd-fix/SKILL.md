@@ -17,6 +17,7 @@ description: 修复 NESND（Neo-Era Southern and Northern Dynasties）维多利�
 
 1. [debugging.md](references/debugging.md)：修复流程。
 2. nesnd-victoria3 技能的 `references/verification.md`：外部检查、读日志与交付写法。
+3. 修复要新写或改写玩家看到的文字（日志正文、选国描述、提示、事件）时，先使用 nesnd-player-writing 技能，读它路由表里的全部必读文件再动笔。
 
 ## 按症状再读
 
