@@ -64,6 +64,18 @@ def main():
     ap.add_argument("--keys", required=True, help="键名正则")
     ap.add_argument("--root", default=".", help="源目录（默认当前目录）")
     a = ap.parse_args()
+    # 断行检查：值里混进真换行（应写成 \n）时，这一键在游戏里会坏掉，下面的正则也会漏读它。
+    broken = []
+    for lang in ("simp_chinese", "english"):
+        for p in glob.glob(os.path.join(a.root, "localization", lang, "**", "*.yml"), recursive=True):
+            raw = open(p, "rb").read().decode("utf-8-sig", "replace")
+            for i, line in enumerate(re.split(r"\r?\n", raw), 1):
+                s = line.strip()
+                if not s or s.startswith("#") or re.match(r"^l_\w+:$", s) or re.match(r'^[\w.\-]+:\d*\s*".*"\s*(#.*)?$', s):
+                    continue
+                broken.append(f"{os.path.relpath(p, a.root)}:{i}")
+    if broken:
+        print("断行（值里有真换行或缺引号）：", ", ".join(broken))
     zh = load(a.root, "simp_chinese", a.keys)
     en = load(a.root, "english", a.keys)
     hits = {}
