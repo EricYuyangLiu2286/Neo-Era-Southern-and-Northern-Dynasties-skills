@@ -57,6 +57,8 @@ description: Neo-Era Southern and Northern Dynasties（NESND）维多利亚3 MOD
 | 工具 | `nesnd-tools` |
 | 分析 | `nesnd-analysis` |
 
+脚本或文字要指称人口、职业、利益集团、文化、宗教、国家、法律等游戏对象，或拿不准两个概念是不是一回事时，另用 `nesnd-game-concepts` 技能。它只记易错处，没记到的去游戏文件里核对，不要凭印象写。
+
 ## 5. 交付与维护
 
 - 交付说明的格式见 [verification.md](references/verification.md) §3；然后按 STATUS.md 末尾的规则更新它。

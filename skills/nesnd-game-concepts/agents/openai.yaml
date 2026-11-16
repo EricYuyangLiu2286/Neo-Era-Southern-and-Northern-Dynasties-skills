@@ -1,0 +1,6 @@
+interface:
+  display_name: "NESND 游戏概念"
+  short_description: "易错的游戏术语与概念，以及怎样核对"
+  default_prompt: "使用 $nesnd-game-concepts：查不到的对象去游戏文件里核对，不要凭印象写。"
+policy:
+  allow_implicit_invocation: true

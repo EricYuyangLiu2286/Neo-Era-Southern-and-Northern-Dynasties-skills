@@ -21,6 +21,7 @@ nesnd-victoria3/              仓库根目录，同时是共用技能 nesnd-vict
     nesnd-tools/              开发工具、部署脚本、维护这些技能
     nesnd-analysis/           只分析、出报告
     nesnd-player-writing/     玩家看到的中英文字
+    nesnd-game-concepts/      易错的游戏术语与概念、文本函数取名、怎样核对（各任务都可用）
     beiming-biography/        北明世界人物列传（不属 MOD 开发流程）
 ```
 
@@ -39,6 +40,7 @@ nesnd-victoria3/              仓库根目录，同时是共用技能 nesnd-vict
 
 - 五个任务技能开头都写“先使用 nesnd-victoria3 技能”：开工前检查和硬规则在那里，缺了会做错。
 - nesnd-player-writing 与 beiming-biography 不依赖共用技能也能工作，所以没有这条指向。
+- nesnd-game-concepts 不是任务类型，是各任务都会用到的概念查错：脚本或文字要指称人口、利益集团、文化、宗教、国家、法律等游戏对象时使用。它只记踩过的坑，查不到的要去游戏文件里核对。
 
 ## 改技能时的规则
 
