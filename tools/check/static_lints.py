@@ -7,6 +7,7 @@ Checks over the source folder (read only):
          compares against the iterated object, e.g. c:X ?= this (engine: "Scope dependent values
          in localization inside an any trigger"), reached from a place that generates descriptions:
          button/decision/journal possible, visible journal outcome trigger, event option trigger.
+  deadhook a mod file appends to an on_action that nothing fires (not engine, not base game, not called).
   locsv  localisation reads ScriptValue('x') that neither the MOD nor the base game defines.
   tipctx key opened through #tooltip:[X.GetTooltipTag],key reads an object the tag does not pass,
          or reads Country.MakeScope.ScriptValue inside a country tooltip (failed in game 2026-11-17).
@@ -243,12 +244,44 @@ def check_tipctx():
     return list(uniq.values())
 
 
+DOCS = Path(r'D:\Users\Eric Liu\Documents\Paradox Interactive\Victoria 3\docs')
+
+
+def check_deadhook():
+    """A mod file appends to an on_action that nothing fires: not 'From Code: Yes' in docs/on_actions.log,
+    not defined by the base game, and not listed in any on_actions block or trigger_on_action in the MOD.
+    on_weekly_pulse_country was such a hook until 2026-11-17."""
+    from catalog import GAME
+    code = set()
+    p = DOCS / 'on_actions.log'
+    if p.exists():
+        code = set(re.findall(r'\n(\w+):\nFrom Code: Yes', p.read_text('utf-8', errors='replace')))
+    vanilla = set()
+    for q in (GAME / 'common/on_actions').glob('*.txt'):
+        vanilla |= set(re.findall(r'^(\w+)\s*=\s*\{', text(q), re.M))
+    called = set()
+    for root in ('common', 'events'):
+        for q in (MOD / root).rglob('*.txt'):
+            t = text(q)
+            for m in re.finditer(r'\bon_actions\s*=\s*\{([^}]*)\}', t):
+                called |= set(m.group(1).split())
+            called |= set(re.findall(r'trigger_on_action\s*=\s*(\w+)', t))
+    out = []
+    for q in (MOD / 'common/on_actions').glob('*.txt'):
+        t = text(q)
+        for m in re.finditer(r'^(on_\w+)\s*=\s*\{', t, re.M):
+            k = m.group(1)
+            if k not in code and k not in vanilla and k not in called:
+                out.append({'file': q.relative_to(MOD).as_posix(), 'line': line_of(t, m.start()), 'on_action': k})
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split('\n')[0])
-    ap.add_argument('--checks', default='bom,color,anyeq,locsv,tipctx')
+    ap.add_argument('--checks', default='bom,color,anyeq,locsv,tipctx,deadhook')
     ap.add_argument('--out', type=Path)
     a = ap.parse_args()
-    fns = {'bom': check_bom, 'color': check_color, 'anyeq': check_anyeq, 'locsv': check_locsv, 'tipctx': check_tipctx}
+    fns = {'bom': check_bom, 'color': check_color, 'anyeq': check_anyeq, 'locsv': check_locsv, 'tipctx': check_tipctx, 'deadhook': check_deadhook}
     res = {c: fns[c]() for c in a.checks.split(',')}
     for c, items in res.items():
         print(f'{c}: {len(items)}')

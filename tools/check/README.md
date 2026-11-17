@@ -5,7 +5,7 @@
 | 脚本 | 用途 | 什么时候用 | 运行 |
 |---|---|---|---|
 | `script_xcheck.py` | 按 1.15 script_docs 交叉检查一组文件：未知 trigger/effect、条件与效果混用、作用域不符、变量只写不读、引用未定义 | 一个新系统写完时 | `python tools/check/script_xcheck.py "common/**/nesnd_sha_*.txt" "events/nesnd_sha_*.txt"`（路径相对源目录） |
-| `static_lints.py` | 扫缺 UTF-8 BOM、可见结局缺 `color`、会生成说明的条件里随遍历对象变化的 `any_*` 比较；`locsv`：本地化读取了 MOD 和原版都没有定义的脚本值；`tipctx`：经 `#tooltip:[X.GetTooltipTag],key` 打开的内层读了标签没传进来的对象（ROOT、SCOPE 等），或在国家悬停里写 `Country.MakeScope.ScriptValue`（2026-11-17 实机报错，见 lookup/journal-ui.md）。`anyeq` 是文本扫描，结果是风险清单 | 交付前；改了本地化里的动态读数时必跑 `locsv,tipctx` | `python tools/check/static_lints.py [--checks bom,color,anyeq,locsv,tipctx] [--out <报告.json>]` |
+| `static_lints.py` | 扫缺 UTF-8 BOM、可见结局缺 `color`、会生成说明的条件里随遍历对象变化的 `any_*` 比较；`locsv`：本地化读取了 MOD 和原版都没有定义的脚本值；`deadhook`：挂在引擎从不触发的 on_action 上（如 `on_weekly_pulse_country`）的钩子；`tipctx`：经 `#tooltip:[X.GetTooltipTag],key` 打开的内层读了标签没传进来的对象（ROOT、SCOPE 等），或在国家悬停里写 `Country.MakeScope.ScriptValue`（2026-11-17 实机报错，见 lookup/journal-ui.md）。`anyeq` 是文本扫描，结果是风险清单 | 交付前；改了本地化里的动态读数时必跑 `locsv,tipctx` | `python tools/check/static_lints.py [--checks bom,color,anyeq,locsv,tipctx,deadhook] [--out <报告.json>]` |
 | `toolkit_check.py` | 用 Paradox Modding Toolkit 的语言服务器检查指定文件，带“多一个右括号”的反例对照 | 改完脚本或本地化后 | `python tools/check/toolkit_check.py --out <报告目录> <MOD 相对路径>…` |
 | `tiger_delta.py` | 对改动前备份和当前源目录各跑一次 vic3-tiger，只列改动文件新增的报错 | 交付前 | `python tools/check/tiger_delta.py --before <备份>/mod --out <报告目录>` |
 

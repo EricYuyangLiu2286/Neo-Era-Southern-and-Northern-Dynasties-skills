@@ -107,3 +107,7 @@ IG判定用当前script_docs的 `ig_clout` / `ig_approval`；不能将scope列�
 ## 博弈与变量比较〔1.15.1，2026-11-17 实机〕
 
 在战争作用域里写 `diplomatic_play ?= prev.var:<存的博弈>` 会报 "Invalid right side during comparison 'var'"，每次求值都报，触发器按假处理。要判断“它应召的那场博弈还在打、它还在和吴打仗”，改为 `var:<博弈> = { is_war = yes }` 加 `has_war_with = c:USM`（`nesnd_jingnan_may_receive_rebel_journal`）。`change_variable` 作用在尚不存在的变量上会报 "Variable not of the 'value' scope type. Type: empty"，改动丢失，先 `set_variable` 为 0。
+
+## on_action 是否由引擎触发〔1.15.1，2026-11-17〕
+
+`on_weekly_pulse_country` 不是引擎事件：`docs/on_actions.log` 标为 "From Code: No"，原版也没有它，挂在上面的效果从不执行。国家级最短的引擎脉冲是 `on_monthly_pulse_country`；需要每周跑的，挂在日志的 `on_weekly_pulse` 里。南朝战后收尾（`nesnd_south_holdout_weekly`）因此从未运行，2026-11-17 改挂月度脉冲。挂新钩子前在 `docs/on_actions.log` 查它的 From Code；`tools/check/static_lints.py --checks deadhook` 会列出挂在非引擎 on_action 上、又没有别处触发的钩子。
