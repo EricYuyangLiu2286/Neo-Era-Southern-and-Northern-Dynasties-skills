@@ -12,7 +12,8 @@ Checks:
   5. static modifiers, events, buttons, bars, journal entries, loc keys referenced but undefined
 """
 import re, sys, glob, os, collections
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import sys as _sys, pathlib as _pl
+_sys.path.insert(0, str(_pl.Path(__file__).resolve().parents[1] / 'lib'))  # shared modules: catalog, pdx
 import pdx
 
 MOD = r'D:/Users/Eric Liu/Documents/Paradox Interactive/Victoria 3/nesnd-source'

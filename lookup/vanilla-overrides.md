@@ -1,6 +1,6 @@
 # 本 MOD 修改的原版文件
 
-> 何时读：游戏更新时复查被整文件覆盖的原版文件；新增或撤回同路径覆盖时。不必读：只改本 MOD 自有文件。重新生成：`python scripts/vanilla_overrides.py`（见 [tools.md](../references/tools.md)）。
+> 何时读：游戏更新时复查被整文件覆盖的原版文件；新增或撤回同路径覆盖时。不必读：只改本 MOD 自有文件。重新生成：`python tools/lookup/vanilla_overrides.py`（见 [tools.md](../references/tools.md)）。
 
 对照 Victoria 3 1.15.1，Steam build 26591675。文件夹从 MOD 根目录或原版 `game/` 起算，拼上文件名即可定位双方文件。
 

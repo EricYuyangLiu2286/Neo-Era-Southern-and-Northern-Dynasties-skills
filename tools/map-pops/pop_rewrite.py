@@ -14,6 +14,8 @@ Generalised from WORK/reports/denglai-route/far_north_pops.py (2026-11-10).
 """
 import argparse, json, re
 from pathlib import Path
+import sys as _sys, pathlib as _pl
+_sys.path.insert(0, str(_pl.Path(__file__).resolve().parents[1] / 'lib'))  # shared modules: catalog, pdx
 from catalog import MOD
 
 

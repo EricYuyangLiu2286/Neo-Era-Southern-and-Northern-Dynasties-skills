@@ -11,6 +11,8 @@ Generalised from the per-report toolkit.py copies of 2026-11-06/07.
 """
 import argparse, json, os, queue, subprocess, threading, time
 from pathlib import Path
+import sys as _sys, pathlib as _pl
+_sys.path.insert(0, str(_pl.Path(__file__).resolve().parents[1] / 'lib'))  # shared modules: catalog, pdx
 from catalog import MOD, GAME
 
 def newest_server():

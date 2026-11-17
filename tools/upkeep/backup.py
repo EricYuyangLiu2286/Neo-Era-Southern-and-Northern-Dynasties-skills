@@ -7,9 +7,11 @@ Some paths: python scripts/backup.py --status pre-change --label <topic> --paths
 from pathlib import Path
 from datetime import datetime, timezone
 import hashlib, json, shutil, argparse, re
+import sys as _sys, pathlib as _pl
+_sys.path.insert(0, str(_pl.Path(__file__).resolve().parents[1] / 'lib'))  # shared modules: catalog, pdx
 from catalog import MOD, WORK, version
 
-SKILLS = Path(__file__).resolve().parents[2]  # ...\.codex\skills
+SKILLS = Path(__file__).resolve().parents[3]  # ...\.codex\skills
 
 def manifest(root):
     return {p.relative_to(root).as_posix():hashlib.sha256(p.read_bytes()).hexdigest()

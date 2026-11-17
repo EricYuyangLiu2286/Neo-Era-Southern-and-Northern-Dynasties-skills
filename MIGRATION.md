@@ -309,3 +309,11 @@
 - 作者把其余技能（含 `beiming-biography`）移入 `nesnd-victoria3/skills/`。技能仓库即 `nesnd-victoria3/`：根目录是共用技能本身，另加 `AGENTS.md`、`CLAUDE.md`、`.gitignore`。`scripts/skill_loss_check.py` 改为比对所有 `nesnd-*` 技能。
 - 防丢失检查中改写而未逐字保留的条目（链接改为文字点名、维护规则按新结构改写、“何时读”并入 description）：u:5b737530、u:601bde71、u:9d00c03e、u:711ac8f2、u:370b8588、u:dfaa33ec、u:2973746e、u:781fb8db、u:e4cdad5d、u:0d9c3a75、u:fa4f31f9、u:cc3b1a70、u:07bb3664、u:0605341e、u:40c78f6f、u:fd3ea4a3、u:cfce1b5d、u:1e54059d、u:1c7dd317、u:1ed07bc8、u:726265fc、u:444705fa、u:6ec41b12、u:61636d3d。
 - 按作者的新位置改写的路径记录：`lookup/paths.md` 的技能文件夹一行（u:bb7cdee4）改为技能仓库与 `skills/` 的说明。
+
+## 10. 2026-11-17 工具改为总目录加分组细则
+
+- 改动前备份：`WORK/backups/pre-change-skill-tools-reorg-20261117T132008Z/`（整个技能仓库）。
+- 作者要求：工具太多，改为一个总目录（每个场景一行短句：用什么、怎么用、细则在哪），各组的细则和脚本放在子文件夹里管理。
+- 结构：`scripts/` 撤销。脚本按用途移入 `tools/<组>/`：`check`（script_xcheck、static_lints、toolkit_check、tiger_delta）、`lookup`（docs_lookup、audit、je_stats、vanilla_overrides）、`logs-saves`（log_report）、`map-pops`（pop_rewrite）、`upkeep`（backup、skill_loss_check）；共用模块 catalog、pdx 移入 `tools/lib/`，各工具启动时自己加入导入路径；`backup.py`、`skill_loss_check.py`、`vanilla_overrides.py` 里按文件深度计算的路径同步加一层。各组 `README.md` 是细则；`tools/simulate/README.md` 新写（按脚本逐月模拟的做法与实例），`tools/deploy/README.md` 是原 tools.md §4 原文。
+- `references/tools.md` 改为总目录；原第 1、2 节各行的用途、时机、命令按组搬进各 `README.md`，命令路径从 `scripts/` 改为 `tools/<组>/`。原第 3 节“链条概率模拟”一行并入 `tools/simulate/README.md` 的实例表。`content-design.md` §7、`numeric-scale-contract.md`、`verification.md` 指向 `tools/simulate`。
+- 防丢失检查中改写而未逐字保留的条目（路径改名、并入新细则或改写为指向）：u:d0dceeee、u:b45d4fdb、u:ed979055、u:a8696628、u:2cc066e8、u:a08c31d2、u:e50497ce、u:79f0928e、u:bfc1b166、u:55a8c661、u:3b9e11b9、u:89332334。

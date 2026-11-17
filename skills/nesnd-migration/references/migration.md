@@ -44,5 +44,5 @@
 
 ## 迁移用的工具与清单
 
-- 重新生成修改的原版文件清单（nesnd-victoria3 技能 `lookup/vanilla-overrides.md`）：`python scripts/vanilla_overrides.py`（见 tools.md（nesnd-victoria3 技能 `references/tools.md`））。
+- 重新生成修改的原版文件清单（nesnd-victoria3 技能 `lookup/vanilla-overrides.md`）：`python tools/lookup/vanilla_overrides.py`（见 tools.md（nesnd-victoria3 技能 `references/tools.md`））。
 - 海域与港口的版本迁移见 map-transport.md（nesnd-victoria3 技能 `references/map-transport.md`） 的“海域版本迁移”节；接口差异逐条对照 engine-facts.md（nesnd-victoria3 技能 `lookup/engine-facts.md`） 的版本标记。

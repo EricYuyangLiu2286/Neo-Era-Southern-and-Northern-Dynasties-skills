@@ -27,7 +27,7 @@
 - 报错原文：`country_c_equal: Scope dependent values in localization inside an any trigger; consider using a custom_tooltip; at <文件>:<行>`。每生成一次说明，报“国家数 × 内部比较处数”条。界面显示时逐帧重建，几秒就能把 error.log 轮转一遍。
 - 反例：`nesnd_south_unresolved_holdouts = { any_country = { nesnd_south_mainland_holdout = yes … } }`，内部展开出 11 处 `c:X ?= this`，2026-11-12 一局报 28 万多条。
 - 正例：`nesnd_south_unresolved_holdouts = { custom_tooltip = { text = nesnd_south_unresolved_holdouts_tt any_country = { … } } }`。同类修复：`nesnd_europe_america.txt:12`（任务 57）、`scripted_buttons/nesnd_sha_restore_yan.txt:38`。
-- 写新条件时，先把 scripted trigger 逐层展开，查 `any_*` 内部有没有这类比较。交付前可用 `scripts/static_lints.py` 扫描。
+- 写新条件时，先把 scripted trigger 逐层展开，查 `any_*` 内部有没有这类比较。交付前可用 `tools/check/static_lints.py` 扫描。
 
 ## 2. 按钮预览与周期占比：2026-11-03实际反馈
 

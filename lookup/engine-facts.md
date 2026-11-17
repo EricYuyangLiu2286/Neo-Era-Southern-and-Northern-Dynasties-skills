@@ -49,6 +49,7 @@
 - 事件正文没有 Date 上下文，`[Date.GetString]` 报 `No context supplied … 'Date'`。原版只在代码提供日期的冷却提示里用它，事件正文用 `[TimeKeeper.GetCurrentDate.GetString]`（GAME `ip2_misc_01_l_english.yml:497` 等）。
 - 新增文化必须同时定义 6 个静态修正，否则加载报 `Missing expected culture static modifier`：`<文化>_standard_of_living_modifier_positive/negative`（`state_<文化>_standard_of_living_add = 1`）、`<文化>_cultural_acceptance_modifier_*`（`country_<文化>_cultural_acceptance_add`）、`<文化>_fervor_target_modifier_*`（`country_fervor_target_<文化>_add`）。格式照 GAME `07_culture_standard_of_living.txt`、`10_culture_cultural_acceptance_modifiers.txt`，不配本地化。本 MOD 例：`common/static_modifiers/nesnd_regional_communities.txt`。
 - 社会阶层和等级制的 `pop_criteria` 里解析不了 `cu:` 链接（`this = cu:manchu` 报 `Invalid right side during comparison 'cu'`，一次读档 1,600 多条）。按人口的文化键判断用 `has_pop_culture = manchu`，原版说明 `common/social_classes/readme.md` 的写法是 `has_pop_religion = catholic`。每个受等级制管辖的人口必须恰好落入一个阶层，判断失败可能崩溃或损坏存档（同一 readme）。
+- 一国可以同时处在多个外交博弈中，已有博弈或战争不会阻止 `create_diplomatic_play` 再建一个（作者 2026-11-17 确认）。不要把“博弈建不起来”当作某个流程卡住的原因。
 - 脚本与本地化缺 UTF-8 BOM 时，加载报 `should be in utf8-bom encoding`（仍会读取）。原版纹章文件 BOM 混用，引擎不报。
 - 可见结局缺 `color`、`possible = { always = no }` 挡住 `add_journal_entry`：见 [journal-display.md §4](../references/journal-display.md)。
 

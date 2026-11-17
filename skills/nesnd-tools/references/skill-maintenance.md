@@ -12,7 +12,7 @@
 
 ## 结构
 
-- `nesnd-victoria3` 是共用底座：`SKILL.md` 只做入口（开工前检查、所有任务共用的硬规则、通用做法、“任务 → 技能”表）；`references/` 放共用的做法，`lookup/` 放查表（接口事实、数值量级、设定、清单），`scripts/` 放共用脚本。按主题找文件的表在 `lookup/topics.md`。
+- `nesnd-victoria3` 是共用底座：`SKILL.md` 只做入口（开工前检查、所有任务共用的硬规则、通用做法、“任务 → 技能”表）；`references/` 放共用的做法，`lookup/` 放查表（接口事实、数值量级、设定、清单），`tools/<组>/` 放共用脚本和该组的细则（`references/tools.md` 是总目录，每组一行；共用模块在 `tools/lib/`）。按主题找文件的表在 `lookup/topics.md`。
 - 每类任务一个独立技能，放在仓库 `skills/` 下（`nesnd-fix`、`nesnd-new-content`、`nesnd-migration`、`nesnd-tools`、`nesnd-analysis`；文字是 `nesnd-player-writing`），由 `description` 触发。只给这一类任务用的参考文件放在该技能自己的 `references/`。
 - 技能之间不写跨文件夹链接（不写 `../别的技能/文件.md`）。要用另一个技能的内容，写“使用某某技能”，需要时再用普通文字点名其中的文件路径。只有缺了就会做错的依赖才写明确指向（各任务技能开头的“先使用 nesnd-victoria3 技能”）；可有可无的不写。
 - 一个参考文件只被一个任务技能用，就放进那个技能；被两个以上技能用，留在 `nesnd-victoria3`。
@@ -35,6 +35,6 @@
 
 ## Git
 
-- 技能仓库是 `C:/Users/Eric Liu/.codex/skills/nesnd-victoria3/`：根目录既是共用技能 nesnd-victoria3（`SKILL.md`、`references/`、`lookup/`、`scripts/`），又放仓库说明 `AGENTS.md`、`CLAUDE.md`；其余技能在 `skills/<技能名>/`。新技能也放进 `skills/`。
+- 技能仓库是 `C:/Users/Eric Liu/.codex/skills/nesnd-victoria3/`：根目录既是共用技能 nesnd-victoria3（`SKILL.md`、`references/`、`lookup/`、`tools/`），又放仓库说明 `AGENTS.md`、`CLAUDE.md`；其余技能在 `skills/<技能名>/`。新技能也放进 `skills/`。
 - 改完技能就在技能仓库提交；推送前问作者。
 - 2026-11-14 之前的技能历史在 MOD 仓库（源目录）的 `development/nesnd-skill/`、`development/nesnd-player-writing/` 中，查旧版用那边的 Git 历史；2026-11-06 重写前的旧版在提交 `2643273`。

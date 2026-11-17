@@ -18,6 +18,8 @@ import json
 import re
 from pathlib import Path
 
+import sys as _sys, pathlib as _pl
+_sys.path.insert(0, str(_pl.Path(__file__).resolve().parents[1] / 'lib'))  # shared modules: catalog, pdx
 from catalog import MOD
 
 BOM = b'\xef\xbb\xbf'

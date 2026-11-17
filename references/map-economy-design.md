@@ -45,4 +45,4 @@
 
 - 湖泊外观疑点先对照有效default.map.lakes、province_terrains和相邻state_region，区分原版分类与MOD误分配。本轮甘肃xBD5671与原版一致，按用户要求保留；不能只把它塞进州而忘了湖泊/地形层。
 
-实例：远北人口改写的守恒写法（逐州断言总量不变、保留 BOM 与换行）已收编为 `scripts/pop_rewrite.py`，原脚本 `WORK/reports/denglai-route/far_north_pops.py`；分州的完整记录见源目录 `.scratch/denglai-route/issues/14-boli-split-delay-alliance.md`。
+实例：远北人口改写的守恒写法（逐州断言总量不变、保留 BOM 与换行）已收编为 `tools/map-pops/pop_rewrite.py`，原脚本 `WORK/reports/denglai-route/far_north_pops.py`；分州的完整记录见源目录 `.scratch/denglai-route/issues/14-boli-split-delay-alliance.md`。

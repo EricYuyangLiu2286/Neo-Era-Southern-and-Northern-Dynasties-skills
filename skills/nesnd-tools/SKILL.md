@@ -9,7 +9,7 @@ description: 编写、修改或运行 NESND（Neo-Era Southern and Northern Dyna
 
 ## 必读
 
-1. nesnd-victoria3 技能的 `references/tools.md`：现有工具与部署脚本（§4）。
+1. nesnd-victoria3 技能的 `references/tools.md`：工具总目录，按用途链到各组细则 `tools/<组>/README.md`（部署在 `tools/deploy/`）。
 2. nesnd-victoria3 技能的 `references/verification.md` §4：备份与版本。
 
 ## 改 nesnd-* 技能时

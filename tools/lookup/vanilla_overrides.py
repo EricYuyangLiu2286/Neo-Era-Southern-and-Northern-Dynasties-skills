@@ -14,9 +14,11 @@ import argparse, hashlib, json, re
 from collections import defaultdict
 from datetime import date
 from pathlib import Path
+import sys as _sys, pathlib as _pl
+_sys.path.insert(0, str(_pl.Path(__file__).resolve().parents[1] / 'lib'))  # shared modules: catalog, pdx
 from catalog import MOD, WORK, GAME, version
 
-EXISTING = Path(__file__).resolve().parent.parent / 'lookup' / 'vanilla-overrides.md'
+EXISTING = Path(__file__).resolve().parents[2] / 'lookup' / 'vanilla-overrides.md'
 FIRST_GENERATED = '## 内容有改动'
 VERSION_LINE = re.compile(r'^对照 Victoria 3 .*$', re.M)
 CITED_PATH = re.compile(r'`((?:common|events|gfx|gui|localization|map_data)/[^`]+\.[A-Za-z0-9]+)`')

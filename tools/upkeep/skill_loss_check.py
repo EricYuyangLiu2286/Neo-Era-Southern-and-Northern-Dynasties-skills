@@ -80,7 +80,7 @@ def uid(n):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--old', type=Path, required=True)
-    ap.add_argument('--new', type=Path, default=Path(__file__).resolve().parents[2])
+    ap.add_argument('--new', type=Path, default=Path(__file__).resolve().parents[3])
     ap.add_argument('--json', type=Path)
     a = ap.parse_args()
     new_files = skill_files(a.new)

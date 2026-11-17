@@ -2,6 +2,8 @@
 import argparse,re,json,hashlib
 from pathlib import Path
 from collections import Counter
+import sys as _sys, pathlib as _pl
+_sys.path.insert(0, str(_pl.Path(__file__).resolve().parents[1] / 'lib'))  # shared modules: catalog, pdx
 from catalog import MOD,GAME,WORK
 
 STAMP=re.compile(r'^\[(\d\d:\d\d:\d\d)\]')

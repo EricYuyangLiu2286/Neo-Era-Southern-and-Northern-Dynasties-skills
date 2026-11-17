@@ -11,7 +11,7 @@ nesnd-victoria3/              仓库根目录，同时是共用技能 nesnd-vict
   AGENTS.md  CLAUDE.md        本说明
   SKILL.md                    共用技能入口：开工前检查、硬规则、通用做法、任务 → 技能表
   references/  lookup/        共用的做法与查表（多个技能都用）
-  scripts/                    共用脚本（catalog、audit、backup、静态检查等）
+  tools/                      共用工具，按用途分组：check、lookup、logs-saves、map-pops、simulate、upkeep、deploy，各有 README.md 细则；共用模块在 tools/lib/
   agents/openai.yaml          Codex 显示信息
   MIGRATION.md                技能结构的变更记录
   skills/
@@ -25,7 +25,7 @@ nesnd-victoria3/              仓库根目录，同时是共用技能 nesnd-vict
     beiming-biography/        北明世界人物列传（不属 MOD 开发流程）
 ```
 
-每个技能文件夹自成一体：`SKILL.md`（入口，开头的 `description` 决定何时触发），只供自己用的文件放在自己的 `references/`、`lookup/` 或 `scripts/` 里。
+每个技能文件夹自成一体：`SKILL.md`（入口，开头的 `description` 决定何时触发），只供自己用的文件放在自己的 `references/`、`lookup/` 或 `scripts/`（共用技能是 `tools/`）里。
 
 ## 技能怎么配合
 

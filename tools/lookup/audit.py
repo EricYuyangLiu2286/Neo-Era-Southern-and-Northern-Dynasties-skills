@@ -2,6 +2,8 @@
 import argparse, json, re
 from collections import defaultdict, Counter
 from pathlib import Path
+import sys as _sys, pathlib as _pl
+_sys.path.insert(0, str(_pl.Path(__file__).resolve().parents[1] / 'lib'))  # shared modules: catalog, pdx
 from catalog import GAME,MOD,WORK,version
 from pdx import read,effective_files,basekey
 

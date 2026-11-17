@@ -50,7 +50,7 @@
 | 法律/IG | `laws/ce_trade_policy.txt`、`ideologies/ce_ig_ideologies.txt`、`ce_leader_ideologies.txt`、国家历史 | 法律定义、意识形态态度、国家/角色的意识形态配置，勿混为同层 |
 | 本地化 | `localization/simp_chinese/replace/`、`localization/english/replace/` | 两种语言保留相同键；地图名在 `replace/map/`，避免重复键 |
 
-路径和文件列表由 `scripts/catalog.py refresh` 从实际磁盘生成到 WORK/reports/source-catalog.json；索引用于定位，源文件是最终内容依据。
+路径和文件列表由 `tools/lib/catalog.py refresh` 从实际磁盘生成到 WORK/reports/source-catalog.json；索引用于定位，源文件是最终内容依据。
 
 ## 向谁学
 

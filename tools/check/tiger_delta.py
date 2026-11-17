@@ -11,6 +11,8 @@ Generalised from the per-report run_tiger.py and delta.py scripts (2026-11-07).
 import argparse, hashlib, json, subprocess
 from collections import Counter
 from pathlib import Path
+import sys as _sys, pathlib as _pl
+_sys.path.insert(0, str(_pl.Path(__file__).resolve().parents[1] / 'lib'))  # shared modules: catalog, pdx
 from catalog import MOD, WORK, GAME, WORKSHOP
 
 CONF = ('languages = { check = "english" check = "simp_chinese" }\n'
