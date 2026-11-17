@@ -90,6 +90,8 @@ IG判定用当前script_docs的 `ig_clout` / `ig_approval`；不能将scope列�
 
 〔部分核：1.15.0 `00_military_formations_europe.txt` 等仍用 `ship_type:`〕
 
+`army_size` 只算常备营，不含征召兵（`docs/event_targets.log`）；含征召兵用 `army_size_including_conscripts`，含已征召未解散的用 `army_size_including_raised_conscripts`。南朝开局蜀楚淮的常备营只有 20、9、25，征召兵占大头，用 `army_size` 比实力时它们几乎没有分量（2026-11-17 日志实测）。
+
 海军历史编制在 `create_military_formation` 内使用 `ship`（`ship_type:`），陆军使用 `combat_unit`。统计兵力不能只遍历 combat_unit 而把海军漏报为零；预设单位数不等于实际招募完成数、舰艇维护能力或可投送兵力。
 
 ## 改革指标的作用域〔1.13.11，1.15.0 未复核〕
