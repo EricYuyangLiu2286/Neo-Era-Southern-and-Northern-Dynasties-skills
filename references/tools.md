@@ -21,7 +21,7 @@
 | 改动前备份、整理技能后查漏 | `backup.py`、`skill_loss_check.py` | 带 SHA-256 清单的备份；逐段核对旧内容去向 | [tools/upkeep](../tools/upkeep/README.md) |
 | 部署到 MOD 文件夹 | 源目录 `deploy.bat` | `check` 开工，`deploy` 交付 | [tools/deploy](../tools/deploy/README.md) |
 
-工作台 `tools/` 和各报告目录里其余脚本多为一次性（带日期或任务名），不登记；需要时按报告目录查。一个一次性脚本第二次被别的任务用到时，整理成通用工具，放进对应组并在上表加一行。
+工作台 `tools/` 和各报告目录里其余脚本多为一次性（带日期或任务名），不登记；需要时按报告目录查。工具什么时候新增、升格、合并或撤下，按 nesnd-tools 技能 `references/skill-maintenance.md` 的“工具的增删”做，改完跑 `tools/upkeep/tools_index_check.py`。
 
 ## 好的实例（只读，作参照）
 
