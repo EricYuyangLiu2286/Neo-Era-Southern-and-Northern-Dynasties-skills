@@ -16,12 +16,27 @@
 - 每类任务一个独立技能，放在仓库 `skills/` 下（`nesnd-fix`、`nesnd-new-content`、`nesnd-migration`、`nesnd-tools`、`nesnd-analysis`；文字是 `nesnd-player-writing`），由 `description` 触发。只给这一类任务用的参考文件放在该技能自己的 `references/`。
 - 技能之间不写跨文件夹链接（不写 `../别的技能/文件.md`）。要用另一个技能的内容，写“使用某某技能”，需要时再用普通文字点名其中的文件路径。只有缺了就会做错的依赖才写明确指向（各任务技能开头的“先使用 nesnd-victoria3 技能”）；可有可无的不写。
 - 一个参考文件只被一个任务技能用，就放进那个技能；被两个以上技能用，留在 `nesnd-victoria3`。
-- 新增任务类型时，同步改 `nesnd-victoria3` 的 §4、仓库根目录的 `AGENTS.md`，以及源目录 `AGENTS.md` 的任务表。任务类型与源目录 `docs/agents/prompt-kit.md` 一致（修复 / 新内容 / 文字 / 迁移 / 工具 / 分析）。
+- 新增任务类型时，同步改 `nesnd-victoria3` 的 §4、仓库根目录的 `AGENTS.md`，以及源目录 `AGENTS.md` 的任务表；新增、改名或删除任何技能后，重建 Claude 联接（见“Claude Code 入口”）。任务类型与源目录 `docs/agents/prompt-kit.md` 一致（修复 / 新内容 / 文字 / 迁移 / 工具 / 分析）。
 - 做法文件里只留支撑规则所需的一两句事实，成段的接口事实放 `nesnd-victoria3` 的 `lookup/`。
 - 每个参考文件在标题下写一行“何时读 / 不必读”。
 - 同一条规则只在一个地方写全，其他地方用一句话指向它。“静态检查不等于实机验证”只写在 `nesnd-victoria3` 的硬规则与 `references/verification.md` §3。
 - 版本事实在 `lookup/engine-facts.md`、`lookup/numeric-facts.md` 标注〔1.15.0 已核〕或〔1.13.11，1.15.0 未复核〕。复核一条就改一条标记。
 - 源目录的 `docs/agents/prompt-kit.md` 按技能名引用任务类型；技能改名或拆分时同步修改它。
+
+## Claude Code 入口
+
+Codex 从 `~/.codex/skills` 和源目录 `AGENTS.md` 读入口；Claude Code 不读这两处，另有两样东西，都不在本仓库里：
+
+- 入口文件 `D:/Users/Eric Liu/Documents/Paradox Interactive/Victoria 3/CLAUDE.md`（文档目录下，不在任何仓库里）：用 `@nesnd-source/AGENTS.md` 引用源目录入口，下面补几句 Claude 专用的话。会话开在 MOD 文件夹、源目录或工作台都会自动加载。开在 MOD 文件夹时，第一次会请作者批准加载外部文件。
+- 技能：`C:/Users/Eric Liu/.claude/skills/` 下每个技能一个目录联接，`nesnd-victoria3` 指向本仓库根目录，其余指向 `skills/<技能名>`。改文件不用动联接；新增、改名、删除技能后，在 PowerShell 里运行下面这段重建（只删指向本仓库的联接，不碰别的技能）：
+
+```powershell
+$repo = 'C:\Users\Eric Liu\.codex\skills\nesnd-victoria3'; $dst = 'C:\Users\Eric Liu\.claude\skills'
+New-Item -ItemType Directory -Force $dst | Out-Null
+Get-ChildItem $dst -Force | Where-Object { $_.LinkType -eq 'Junction' -and ($_.Target -like "$repo*") } | ForEach-Object { $_.Delete() }
+New-Item -ItemType Junction -Path "$dst\nesnd-victoria3" -Target $repo | Out-Null
+Get-ChildItem "$repo\skills" -Directory | Where-Object { Test-Path "$($_.FullName)\SKILL.md" } | ForEach-Object { New-Item -ItemType Junction -Path "$dst\$($_.Name)" -Target $_.FullName | Out-Null }
+```
 
 ## 整理与防丢失
 
