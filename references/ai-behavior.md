@@ -40,7 +40,7 @@ ai_strategy_nesnd_<路线> = {
 	}
 }
 ```
-未写的字段沿用默认策略。想扩军，只能改 `wanted_army_size_script_value`（ASV:146，同名覆盖）或给 `building_group_weights = { bg_army = 1.5 }`。风险：×2 扩军会吃空财政；抢走原外交策略后，其他外交行为也会变。检查：观察者局看策略名（外交面板）与兵营数。
+未写的字段沿用默认策略。想扩军有三种办法：在自己的策略里写 `wanted_army_size = { … }`，它与默认策略的值相加（DS 注释 “Using this value in other strategies will function additively”；创意工坊 2932134122 `BPM_world_revolution.txt:125` 这样用），`value = wanted_army_size_script_value` 即翻倍；给 `building_group_weights = { bg_army = 1.5 }`；改 `wanted_army_size_script_value`（ASV:146）。第三种要整键 `REPLACE:` 抄原版，能用前两种就不用它。`INJECT:` 在任何已装模组里都没有用于 script_values 的先例，不要用。风险：×2 扩军会吃空财政；抢走原外交策略后，其他外交行为也会变。检查：观察者局看策略名（外交面板）与兵营数。
 
 ### 2.2 日志期间的定向信心（昭昭天命型）
 
@@ -99,7 +99,7 @@ if = { # NESND <日志>
 ## 4. 本 MOD 的正反例
 
 - **正：先煽动，看到乱局再解锁。** 登莱开局很弱，凡是要动武的环节，先用按钮或进度条煽动目标国内部的原生运动，检测到对方真的陷入乱局（运动爆发、起义、内战）后才给 aggression 和 recklessness。**反**：日志一开就给登莱 +5 aggression 去打俄国，AI 会送死。
-- **扩军（普鲁士式，2026-11-17）：** 蜀、楚、淮在易代争端中偏明或与吴交战时，行政策略 `ai_strategy_nesnd_south_muster`（`bg_army = 1.5`）加 `wanted_army_size_script_value` ×2（`REPLACE:` 单键覆盖，见 [vanilla-overrides](../lookup/vanilla-overrides.md)）。用行政类型是为了不顶掉属国对宗主的外交策略。条件里排除违约，避免扩军拖垮财政。
+- **扩军（普鲁士式，2026-11-17）：** 蜀、楚、淮在易代争端中偏明或与吴交战时，行政策略 `ai_strategy_nesnd_south_muster`：`bg_army = 1.5`，策略内 `wanted_army_size = { value = wanted_army_size_script_value }` 与默认相加即 ×2，不覆盖原版脚本值。用行政类型是为了不顶掉属国对宗主的外交策略。条件里排除违约，避免扩军拖垮财政。
 - **正：先比实力。** `script_values/nesnd_small_ai.txt` 先比兵力比、GDP 比或可靠外援，达标才给自治、独立的权重。
 - **反：频繁重掷。** 三角贸易的 AI 每年重掷买卖身份，在途订单因此失效。现行做法是选边后锁定三个月，在途订单按原批次结算（`.scratch/triangle-trade/issues/03`）；“选边后永不重掷”作者不采纳（2026-11-14）。规则：AI 定期重掷时，已承诺的交易要按原双方结算，重掷后还要锁定一段时间。
 - **正：让步按钮严格。** `common/scripted_buttons/nesnd_cne_concession.txt` 默认 0，按急迫程度分四档互斥；权力已偏向宠臣、改革临近完成时降权。规则：有代价的按钮，`ai_chance` 写成“只在需要时点”，并写清每一档的理由。
