@@ -15,6 +15,10 @@
 | `common/amendments/00_amendments_historical_04.txt` | `amendment_electoral_clientelism`、`amendment_tradition_of_free_elections` | `common/amendments/nesnd_keju_voting_overrides.txt` | 两条适用法律清单分别加入科举 |
 | `common/scripted_triggers/00_ep2_victoria_scripted_triggers.txt` | `country_is_abolishing_bakufu` | `common/scripted_triggers/nesnd_keju_voting.txt` | 废除幕府的颁布判断加入科举 |
 
+## AI 脚本值的单条原版覆盖（1.15.1，2026-11-17）
+
+`common/script_values/ce_ai_script_values.txt` 用 `REPLACE:wanted_army_size_script_value` 替换原版 `ai_script_values.txt` 的这一个键，其余照常加载。与原版的唯一差异：在“按外交条约开支压低”那一行前，加了 `nesnd_south_muster_ai = yes` 时 ×2（蜀、楚、淮在易代争端中偏明或与吴交战时扩军）。版本更新时用新原版重做这个键，再把这一块插回去。`REPLACE:` 用于 script_values 的先例：创意工坊 2932134122 的 `common/script_values/zz_bpm_*.txt`。
+
 ## AI 触发器的单条原版覆盖（1.15.1，2026-11-14 由整文件覆盖改来）
 
 原版 `common/scripted_triggers/00_ai_triggers.txt` 不再整文件覆盖。MOD 文件 `common/scripted_triggers/ce_ai_triggers.txt` 用 `REPLACE:` 只替换下面 4 个键，原版其余 71 个触发器照常加载。版本更新时，把这 4 个键与新原版逐条比对，再把 MOD 的改动合并进去。
