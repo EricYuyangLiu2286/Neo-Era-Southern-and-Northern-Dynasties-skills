@@ -1,17 +1,20 @@
 """Static scans for load-time and description-time errors that Toolkit does not report.
 
-Three checks over the main MOD (read only):
+Checks over the source folder (read only):
   bom    script or localisation file without UTF-8 BOM (engine: "should be in utf8-bom encoding")
   color  visible journal outcome with a trigger but no color (engine: "outcome N has no color")
   anyeq  any_* whose body, after expanding scripted triggers and dropping custom_tooltip blocks,
          compares against the iterated object, e.g. c:X ?= this (engine: "Scope dependent values
          in localization inside an any trigger"), reached from a place that generates descriptions:
          button/decision/journal possible, visible journal outcome trigger, event option trigger.
+  locsv  localisation reads ScriptValue('x') that neither the MOD nor the base game defines.
+  tipctx key opened through #tooltip:[X.GetTooltipTag],key reads an object the tag does not pass,
+         or reads Country.MakeScope.ScriptValue inside a country tooltip (failed in game 2026-11-17).
 
 The anyeq check is a text scan. A hit is a risk to review, not proof of an error: it fires only
 when the condition is actually described in the UI.
 
-    python scripts/static_lints.py [--checks bom,color,anyeq] [--out report.json]
+    python tools/check/static_lints.py [--checks bom,color,anyeq,locsv,tipctx] [--out report.json]
 """
 import argparse
 import json
@@ -172,12 +175,80 @@ def check_anyeq():
     return out
 
 
+LOC_LINE = re.compile(r'^\s*([\w.\-]+):\d*\s*"(.*)"\s*$')
+TIP = re.compile(r'#tooltip:\[([^\]]*?)\.?GetTooltipTag\],(\w+)')
+SV_READ = re.compile(r"ScriptValue\('(\w+)'\)")
+# Data roots a tooltip target may use, by the object its tag passes. ROOT, SCOPE and the other
+# objects are not passed into the target key.
+TAG_ROOT = {'ROOT.GetCountry': 'Country', 'Country': 'Country', 'GetPlayer': 'Country', 'JournalEntry': 'JournalEntry',
+            'State': 'State', 'Character': 'Character', 'Building': 'Building', 'InterestGroup': 'InterestGroup'}
+DATA_ROOT = re.compile(r'\[(?:[^\[\]]*?[(,]\s*)?(ROOT|SCOPE|JournalEntry|Country|State|Character|Building|InterestGroup)\.')
+
+
+def load_loc(lang='simp_chinese'):
+    keys = {}
+    for p in (MOD / 'localization' / lang).rglob('*.yml'):
+        t = text(p)
+        for n, line in enumerate(t.split('\n'), 1):
+            m = LOC_LINE.match(line)
+            if m:
+                keys[m.group(1)] = (p.relative_to(MOD).as_posix(), n, m.group(2))
+    return keys
+
+
+def expand(keys, k, seen=()):
+    v = keys.get(k, ('', 0, ''))[2]
+    for s in re.findall(r'\$(\w+)\$', v):
+        if s in keys and s not in seen:
+            v += ' ' + expand(keys, s, seen + (s,))
+    return v
+
+
+def check_locsv():
+    """Localisation reads ScriptValue('x') but no script value x exists in the MOD or the base game."""
+    from catalog import GAME
+    defined = set()
+    for root in (MOD, GAME):
+        for p in (root / 'common/script_values').glob('*.txt'):
+            defined |= set(re.findall(r'^(\w+)\s*=', text(p), re.M))
+    out = []
+    for lang in ('simp_chinese', 'english'):
+        for k, (f, n, v) in load_loc(lang).items():
+            for sv in sorted(set(SV_READ.findall(v)) - defined):
+                out.append({'file': f, 'line': n, 'key': k, 'missing': sv})
+    return out
+
+
+def check_tipctx():
+    """Keys opened through #tooltip:[X.GetTooltipTag],key get only the object X passes.
+    Flags (1) data roots in the key that the tag does not pass (ROOT, SCOPE, another object), and
+    (2) Country.MakeScope.ScriptValue inside a country tooltip: on 2026-11-17 nesnd_usm_mandate_rules
+    failed this way in game ("wanted context of type 'Country' ... got context 'TooltipInfo'"), while
+    the base game only reads Country.MakeScope.Var in such keys (content_204_l_english.yml:787)."""
+    out = []
+    keys = load_loc()
+    for k, (f, n, v) in keys.items():
+        for tag, target in TIP.findall(v):
+            want = TAG_ROOT.get(tag)
+            if not want or target not in keys:
+                continue
+            body = expand(keys, target)
+            tf, tn, _ = keys[target]
+            bad = sorted({r for r in DATA_ROOT.findall(body) if r != want})
+            if bad:
+                out.append({'file': tf, 'line': tn, 'key': target, 'opened_from': k, 'problem': f'reads {"/".join(bad)}; tag passes {want}'})
+            if want == 'Country' and re.search(r'Country\.MakeScope\.ScriptValue\(', body):
+                out.append({'file': tf, 'line': tn, 'key': target, 'opened_from': k, 'problem': 'Country.MakeScope.ScriptValue in a country tooltip (failed in game 2026-11-17); use Country.MakeScope.Var or move the number out'})
+    uniq = {(x['key'], x['problem']): x for x in out}
+    return list(uniq.values())
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split('\n')[0])
-    ap.add_argument('--checks', default='bom,color,anyeq')
+    ap.add_argument('--checks', default='bom,color,anyeq,locsv,tipctx')
     ap.add_argument('--out', type=Path)
     a = ap.parse_args()
-    fns = {'bom': check_bom, 'color': check_color, 'anyeq': check_anyeq}
+    fns = {'bom': check_bom, 'color': check_color, 'anyeq': check_anyeq, 'locsv': check_locsv, 'tipctx': check_tipctx}
     res = {c: fns[c]() for c in a.checks.split(',')}
     for c, items in res.items():
         print(f'{c}: {len(items)}')

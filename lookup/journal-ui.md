@@ -50,6 +50,8 @@
 
 日志状态的外层可用 `#tooltippable #tooltip:[ROOT.GetCountry.GetTooltipTag],my_stats_link 统计#!#!`。`my_stats_link` 内层仅获得 Country 对象，动态国家变量应写 `[Country.MakeScope.Var('my_value').GetValue|%1]`，不得继续写 ROOT.GetCountry；不得为省事改为 GetPlayer。当前原版 `content_204_l_english.yml:787—788` 和 `agitators_4_l_english.yml:1473/1478` 有完整调用对，`companies_l_english.yml:25—26` 也展示 GetTooltipTag→Country 的绑定。只在这种对象绑定层切换根，事件和JE正文既有 ROOT 不能全局替换。日志轮转与读法见 verification.md。
 
+2026-11-17 实机反例：`nesnd_usm_mandate_rules` 经同样的国家标签打开，内层写 `Country.MakeScope.ScriptValue('…')`，悬停时三个读数都报 `wanted context of type 'Country' … got context 'TooltipInfo'`。原版国家悬停的内层只用 `Country.MakeScope.Var(...)` 和 `Country.Get…` 方法，没有一处用 `Country.MakeScope.ScriptValue`。写法：要显示的脚本值放到外层（外层有 ROOT），常量直接写数字并在脚本值旁注明，状态量用已存的国家变量 `Var`。`tools/check/static_lints.py --checks tipctx,locsv` 会报这种写法和本地化读取未定义的脚本值。
+
 ### 国家日志状态、预报和条的反例（2026-11-05）
 
 以调用位置确认数据对象。原版 1.13.11 的 `common/journal_entries/06_economic_regeneration.txt:24–37` → `localization/english/ip4_spain_l_english.yml:21` 用 `ROOT.GetCountry.MakeScope.Var` 读取国家状态。第39轮原始日志反复报告日本 `status_desc` 的 `Country.GetCustom` 缺少 Country。对有州／无州等预报，在 JE 的 `first_valid/triggered_desc` 中核所属国、有效对象和状态后选择文字，只在有对象的文本中从根读已保存的州／文化。Realism AI 10.9 的 `common/journal_entries/dsk_je_jap.txt:15–35` 有并列状态组。另有明确 Country datacontext 的 GUI 行可以调用 Country；不能用其例证明状态正文或嵌套文字有同样的数据对象。
