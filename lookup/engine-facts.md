@@ -103,3 +103,7 @@ IG判定用当前script_docs的 `ig_clout` / `ig_approval`；不能将scope列�
 〔1.13.11，1.15.0 未复核〕
 
 当前原生字段为`valid_for_country`、`available_for_interest_group`、`join_weight`。自由党与保守党源码注明国家有效性只在开局求值；动态路线放运行期资格/评分，不承诺`update_party_support`能重跑开局资格。刷新前后党派scope与领袖可能变化，延迟事件须重查对象。改变政治路线不等于必须改党派定义。
+
+## 博弈与变量比较〔1.15.1，2026-11-17 实机〕
+
+在战争作用域里写 `diplomatic_play ?= prev.var:<存的博弈>` 会报 "Invalid right side during comparison 'var'"，每次求值都报，触发器按假处理。要判断“它应召的那场博弈还在打、它还在和吴打仗”，改为 `var:<博弈> = { is_war = yes }` 加 `has_war_with = c:USM`（`nesnd_jingnan_may_receive_rebel_journal`）。`change_variable` 作用在尚不存在的变量上会报 "Variable not of the 'value' scope type. Type: empty"，改动丢失，先 `set_variable` 为 0。
