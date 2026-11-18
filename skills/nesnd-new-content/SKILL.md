@@ -13,6 +13,7 @@ description: 为 NESND（Neo-Era Southern and Northern Dynasties）维多利亚3
 
 1. `references/content-design.md`：先选内容形状，再写代码。
 2. `references/verification.md`：外部检查与交付写法。
+3. `references/journal-display.md` §0：玩家显示的三条硬规定。条件里不出现“国家有/没有相关变量”，每个按钮和选项的效果栏都有内容，每个非隐藏事件都有中英 flavor。交付前逐个按钮、选项核对。
 
 ## 再读
 

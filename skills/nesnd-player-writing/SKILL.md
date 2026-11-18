@@ -18,6 +18,7 @@ description: 为 NESND／北明世界撰写或修订中英文玩家文本，包�
 - 样本只取 tag `original-20261030` 的作者原作（[author-samples.md](lookup/author-samples.md)）；当前 `ce_*` 已被代理改过，`nesnd_*` 是代理稿。
 - **代理稿只能取事实，不能照着改写。** 依据现有 `_reason` 或事件正文写新文字（如 `_lobby`）时，只取其中的人、地、年代、制度和利益，句子按作者样本重写。照句改写会把代理稿的平衡句、对偶和收尾金句原样带进新文字（2026-11-15 选国描述返工）。
 - **交稿前连读整批，再跑检查。** 同一批条目连起来读一遍，看是否反复用同一种句式或结尾。然后运行 `python scripts/cliche_check.py --keys <键名正则>`（在源目录运行），命中的逐条改，或在交付说明里写明为何保留。
+- **玩家显示的三条硬规定**（作者 2026-11-17）：条件写成具名提示，不留“国家有/没有相关变量”；每个按钮和选项的效果栏都要有一句实际结果；每个非隐藏事件都有中英 flavor。全文与正反例在 nesnd-victoria3 技能的 `references/journal-display.md` §0，交稿前对照自查。
 - 改稿逐键保留函数、作用域、共用键、数字、格式参数和颜色；两种语言各自保持键唯一、UTF-8 BOM 和正确语言头（[dynamic-loc.md](lookup/dynamic-loc.md) 末条）。
 - 不用于人物列传（另用 `beiming-biography`），不做脚本验证（归 `nesnd-victoria3`）。
 

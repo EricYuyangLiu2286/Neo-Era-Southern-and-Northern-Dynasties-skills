@@ -1,6 +1,24 @@
 # 玩家看到的条件、提示与结局
 
-> 何时读：写或修日志的可用/完成条件、按钮预览、custom_tooltip、状态行、进度条明细与结局面板。不必读：只改措辞（读玩家写作技能）；查字段名与 GUI 位置（读 lookup/journal-ui.md）。
+> 何时读：写或修日志的可用/完成条件、按钮预览、事件选项、custom_tooltip、状态行、进度条明细与结局面板。不必读：只改措辞（读玩家写作技能）；查字段名与 GUI 位置（读 lookup/journal-ui.md）。
+
+## 0. 玩家显示的三条硬规定（作者 2026-11-17，不可变通）
+
+适用于玩家看得到的位置：按钮 `possible`、日志 `possible`/`complete`/`fail` 与非隐藏结局的 `trigger`、决议 `possible`、事件选项 `trigger`，以及按钮和选项的效果栏。按钮 `visible` 不显示，不在此列。scripted trigger/effect 要逐层展开后再查。
+
+**1. 条件里不出现原生的“国家有/没有相关变量”。** 身份、存在性、防重复、内部阶段用 `hidden_trigger`。对玩家有意义的条件写成具名 `custom_tooltip`，一句说清是什么条件（“本年已向会议提案”“距上次答复已满一年”）。法律、建筑、首都、州等原生能说清的条件仍用原生勾叉（见 §1）。
+- 反例（2026-11-17 波兰线，部署 5dc18f1c）：「提交波兰议程」`common/scripted_buttons/nesnd_congress.txt`（5dc18f1c 第 18–35 行）的 possible 写 `nesnd_congress_room = yes`、`NOT = { has_variable = nesnd_congress_pending }`、`NOT = { has_variable = nesnd_congress_proposal_cooldown }`，展开后界面显示四行“国家没有相关变量”，玩家看不出缺什么。
+- 正例：原版 `common/scripted_buttons/00_balkan_wars_buttons.txt:164–169` 用 `custom_tooltip = { text = balkan_got_tech_cooldown_tt NOT = { has_variable = balkan_got_tech_cooldown } }` 写冷却。同文件 `:284–285` 把内部标记包进 `hidden_trigger`。`08_tsarpoints_buttons.txt:915–920` 用 `hidden_trigger` 藏完成标记。
+
+**2. 每个按钮和事件选项的效果栏都要有内容。** 下列效果不在效果栏显示，单用它们效果栏就是空的：`set_variable` 一类变量操作、`save_scope_as`、脚本进度条的 `add_progress`/`set_bar_progress`（原版都另包 `custom_tooltip`）。`if`/`else_if` 链在条件不满足时整段不显示，所以要有 `else`，或在外层写 `custom_tooltip` 说明本应发生什么、为什么现在没有效果。只触发事件的按钮或选项，要用一句提示说明后续会发生什么（事件里有哪些选择、各自的代价）。
+- 反例：「向巴黎求援」`common/scripted_buttons/nesnd_poland_diet.txt`（5dc18f1c 第 31–44 行）的说明写“法国的意志提高10点，白党获得支持”，效果只有 `set_variable = nesnd_poland_paris_appeal` 和 `je:… = { add_progress = { name = nesnd_poland_red_white_bar value = -8 } }`，效果栏是空的。
+- 正例：原版 `events/agitators_events/algeria_events.txt:72–77` 把 `add_progress` 包进 `custom_tooltip = { text = bonapartist_progress_increase_15_tt … }`。原版 `common/scripted_buttons/00_balkan_wars_buttons.txt:71–75` 在 `if` 之后写 `else = { custom_tooltip = { text = balkan_league_expanded_tt } }`，注释原文“displays tooltip when the above is not available”。
+
+**3. 每个非隐藏事件都要有中英 `flavor`（`.f`）。** 写法按 nesnd-player-writing 技能的 `references/period-voices.md` 和 `references/no-invention.md` §8：先定体裁，只复述正文已有的事实，署体裁或出处，不署“一名某某”。
+- 反例：「波兰的要求」`events/nesnd_congress.txt`（5dc18f1c 第 143 行）的 `nesnd_congress.3` 没有 `flavor`，第三批的会议、窗口、内战、议会事件大都没有。
+- 正例：作者原作（tag `original-20261030`）`events/ce_fra_unrest_events.txt:1472` 写 `flavor = fra_unrest.13.f`，文本是街头口号（`localization/simp_chinese/replace/ce_french_empire_journals_l_simp_chinese.yml:147`，英文同名文件 `:146`）。`events/flavorCNE_ce.txt:189` 的 `flavorCNE.4.f` 是民谣（`ce_cne_events_l_simp_chinese.yml:80`）。
+
+交付前逐个按钮、逐个选项核对这三条，写明位置和当前显示效果。
 
 预告下次文化转化（州、人数、方向）的状态行写法见 [cohesion-journal.md](cohesion-journal.md) §2。
 
