@@ -69,9 +69,13 @@
 
 带 `trigger` 的非隐藏结局必须写 `color`，否则加载时报 `JE <键> outcome <序号> has no color`。本项目惯例：完成型（`je_standard_completion_header`）用 `gold_positive`，失败型和“终止条件”（`nesnd_journal_closures_header`）用 `blue_negative`。
 
-自动激活需要 `is_shown_when_inactive` 与 `possible` 同时成立（同文档25–49）。文档说 `add_journal_entry` 绕过两者，但 1.15.1 实测有例外：日志类型写了 `possible = { always = no }` 时，开局就给每个国家生成一个未激活实例，之后的 `add_journal_entry` 被当作重复拒绝（game.log：`<国名> already has a journal entry of type <键>`），日志永远不激活。证据：2026-11-12 外国干预日志 `nesnd_external_policy`，6 国已执行“跟进”，存档里 241 个实例全部 `active=no`。
+自动激活需要 `is_shown_when_inactive` 与 `possible` 同时成立（同文档25–49）。文档说 `add_journal_entry` 绕过两者，但 1.15.1 实测有例外：日志类型**只要写了 `possible`**（不论条件是 `always = no` 还是真实条件），开局就给每个国家生成一个未激活实例，之后的 `add_journal_entry` 被当作重复拒绝（game.log：`<国名> already has a journal entry of type <键>`）。这个实例此后只能靠两项自动条件同时成立来激活。`is_shown_when_inactive = { always = no }` 再加任何 `possible`，日志就永远不激活。没写 `possible` 的日志不预建实例，add 正常生效。证据：
+- 2026-11-12 外国干预日志 `nesnd_external_policy`（`possible = { always = no }`）：6 国已执行“跟进”，存档里 241 个实例全部 `active=no`。
+- 2026-11-17 俄国「欧洲宪兵」`je_ce_tp_tsar_gendarme_of_europe`（`possible` 是“俄国、有总督日志、君主为尼古拉一世”，`is_shown_when_inactive = { always = no }`）：开局总督日志调用 `je_tsarpoints_assign_missions` 时报 already has，1836.4.1 存档中俄国实例 `active=no date_added=1836.1.1`。同一存档里，没写 `possible` 的原版 `je_tp_pool_build_army` 在俄国已激活，英、法、普、奥、克拉科夫都没有它的实例。写了 `possible` 的 `je_ce_polish_reconquest` 给英、法、普、奥等国都预建了实例。
 
-- 只由事件或按钮开启的日志，让 `is_shown_when_inactive` 和 `possible` 读入口设置的变量，例如 `possible = { has_variable = nesnd_external_following }`；结局里清掉这个变量，防止重新激活。
+改法（前两条按开启方式二选一）：
+- 只由效果加入的日志，照原版 `je_tp_tsar_gendarme_of_europe` 的写法，`possible` 和 `is_shown_when_inactive` 都不写，资格判断放在调用的效果里。
+- 由事件或按钮开启的日志，让 `is_shown_when_inactive` 和 `possible` 读入口设置的变量，例如 `possible = { has_variable = nesnd_external_following }`；结局里清掉这个变量，防止重新激活。
 - 互斥子日志优先用“父日志有效＋方案已选”控制两项自动条件，单一入口。
 - 日志报 already has 而界面看不到时，到存档的日志记录里查该国实例的 `active=`，不要只看 add 有没有执行。
 
