@@ -22,6 +22,7 @@
 - `tools/logs-saves/log_report.py <日志目录> --out <报告.json>` 按内容归组，并保留原文位置。
 - 实际时间换算游戏日期：`dedicated_server.log` 的 `[时:分:秒] … Processing Tick: 年.月.日` 行，暂停与恢复也有记录。用它判断报错发生在哪个游戏日期，和某个事件的先后关系。
 - 打开存档或读档界面时，游戏会读存档文件夹里其他 MOD 和旧版本的存档，产生 `Failed to read key reference`、`Failed to find type '1' in '1.13'`、`MISSING_DLC_ENTRY`、旧国旗纹章等报错，与本 MOD 无关。
+- game.log 的 `<国名> already has a journal entry of type <键>`：日志正常出现就无视，不修（作者 2026-11-18）；日志该出现却没出现时的查法见 [journal-display.md](journal-display.md) §4。
 - 刷屏条数可用来反推来源。例如每秒一批、每批条数等于“国家数 × 某条件里的比较处数”，说明是界面在为一个 `any_country` 生成说明。
 - 问“某件事发生过没有”时，存档比日志可靠。明文存档（或 Rakaly 解码）里各国已结束日志的记录有类型、日期和结局说明键。存档不保留已灭亡国家，结束的战争记录里也没有交战方。
 - 先修本 MOD 脚本引起的错误和每帧刷屏的根因。总错误数包含原版和其他 MOD 的错误，不等于本 MOD 的错误数。

@@ -78,6 +78,7 @@
 - 由事件或按钮开启的日志，让 `is_shown_when_inactive` 和 `possible` 读入口设置的变量，例如 `possible = { has_variable = nesnd_external_following }`；结局里清掉这个变量，防止重新激活。
 - 互斥子日志优先用“父日志有效＋方案已选”控制两项自动条件，单一入口。
 - 日志报 already has 而界面看不到时，到存档的日志记录里查该国实例的 `active=`，不要只看 add 有没有执行。
+- **重复 add 本身可以无视**（作者 2026-11-18）：game.log 的 `already has a journal entry of type <键>` 只要不影响日志正常出现（该国实例 `active=yes`，或日志在应出现时出现），就不算问题，不修，也不为消除这条记录加守卫。例如原版 1836.1.1 第二次调用 `je_tsarpoints_assign_missions`，`je_tp_pool_build_army` 报重复，但日志已在俄国激活。只有实例停在 `active=no`、日志该出现却没出现时才按上面几条处理。
 
 触发器能判真，不代表其原生自动描述有正确数据上下文。本轮 `is_on_defending_side` 可执行，但经国家条件展开时原版 `TRIGGER_IS_ON_DEFENDING_SIDE` 读取 `War.GetName` 而没有War上下文。保留原布尔子树，以一句具名custom_tooltip包装这一判定；不改战争创建、阵营或和平规则，也不伪造全局原版翻译。
 
