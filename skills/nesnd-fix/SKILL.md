@@ -26,6 +26,7 @@ description: 修复 NESND（Neo-Era Southern and Northern Dynasties）维多利�
 | 症状 | 读 |
 |---|---|
 | 本地化“数据上下文”报错：`No context supplied`、`New data types does not contain a '…' data context`、`FetchData failed`、`Data error in loc string`（常为每帧刷屏） | `lookup/journal-ui.md` §3：哪个字段有哪种数据对象（`status_desc` 用 `ROOT`，进度条 desc 有 JournalEntry，增减项没有） |
+| 议和界面缺某方战争目标、存档里 `status=discarded` | `lookup/engine-facts.md`「战争目标被作废」：先查 settings（如 `country_creation`），再查 valid |
 | 引用、预览、延迟回复报错 | `references/script-safety.md` |
 | 日志与进度条 | `references/journal-state.md`、`references/journal-display.md` |
 | 崩溃与人物像 | `references/compatibility.md` |

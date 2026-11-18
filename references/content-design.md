@@ -123,7 +123,7 @@ add_journal_entry = { type = ce_usm_conflicts_within }
 | 要改变的行为 | 查证入口 | 注意 |
 |---|---|---|
 | 宣战、主战目标 | `common/diplomatic_plays/`，本项目 `ce_diplomatic_plays.txt`、`nesnd_japan.txt` | 博弈选了哪个 war_goal；退让和正式开战分别验证 |
-| 战争执行后再分国 | GAME `common/war_goal_types/war_goal_types.md`、`00_annex_country.txt` | `on_enforced` 追加效果；`kind = custom` 无预设效果 |
+| 战争执行后再分国 | GAME `common/war_goal_types/war_goal_types.md`、`00_annex_country.txt` | `on_enforced` 追加效果；`kind = custom` 无预设效果；settings 只照抄原版同类，`country_creation` 不给指向现存国家的目标（lookup/engine-facts.md「战争目标被作废」） |
 | 兼容已有战目标的回调 | GAME `common/on_actions/00_code_on_actions.txt` 的 `on_wargoal_enforced` | root=Country，`scope:target` 为被执行国 |
 | 亡国后重建政权 | `docs/effects.log` 的 `create_country`；`country_definitions/`、`scripted_effects/` | 由存活的控制者调用；不重复刷已存活的 TAG |
 | 法律与社会阶序 | GAME `law_groups → laws → ideologies → social_hierarchies → social_classes → modifier_type_definitions → GUI` | `on_law_activated` 的 root 是 law；固定阶序须每个职业恰好命中一个 class |

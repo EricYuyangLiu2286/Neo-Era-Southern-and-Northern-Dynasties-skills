@@ -24,6 +24,14 @@
 
 条约预检与创建的商品字段（`good` / `goods`）见[原生条约、供给和援助](native-treaty-aid.md)，1.15.0 已核。
 
+### 战争目标被作废：先查 settings，再查 valid〔1.15.1，2026-11-18 存档证据；去掉设置后的效果待实机确认〕
+
+- 现象：议和界面“索取的战争目标”里少了一方的目标。解码存档（tools/logs-saves 的 Rakaly）后，在 `war_goal_manager` 里找到该 `type`，会看到 `status=discarded`。目标一旦作废就不会恢复，复测必须重新开战。
+- 作废有两层检查。一层是脚本 `valid`；另一层是引擎按 `settings` 做的代码检查（GAME `common/war_goal_types/war_goal_types.md`：valid 是 “in addition to some basic validation code-side”）。代码检查不过，`valid` 写得再宽也照样作废。所以先核对 settings 里每一项都与原版同类目标一致，再去查 valid。
+- `country_creation` 表示“这个目标会建立一个现在还不存在的国家”。原版里目标类型是国家、又带这一项的只有 `liberate_country`，它的目标是尚未建立的国家。不能把它当作“兑现时会分出新国”的说明标签，加在指向现存国家的目标上。`conflicts_with_*` 和 `validate_conflicts_*` 同理，只照抄原版同一 kind 用的那几项。
+- 反例：`wg_nesnd_japan_reorganization` 是 `kind = custom`，目标是存活的日本，却带了 `country_creation` 和三项冲突设置。存档里它的 `target.other=18`，即日本本身被当成了“要建立的国家”。1839.4 和 1844 两局都是开战即作废；前两次修复只改了 valid（2026-11-17 改靖难入口，2026-11-18 把 valid 放宽到只剩“吴对存活的日本”），新开战后目标仍被作废。
+- 正例：靠 `on_enforced` 用 `create_country` 建国的自定义目标，`settings = { require_target_be_part_of_war }` 就够了，与 `nesnd_kr_restoration` 相同。
+
 ## 按钮、事件与 AI 权重
 
 〔1.15.0 已核：`07_meiji_buttons.txt:87、211、295` 仍为 script value 形状；`00_colonial_administration_buttons.txt:40` 现为 `value = 100`（旧文写 0）〕

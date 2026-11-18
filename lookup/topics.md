@@ -9,6 +9,7 @@
 | 日志、事件、按钮、进度条 | [journal-state](../references/journal-state.md)、[journal-display](../references/journal-display.md)、[script-safety](../references/script-safety.md) | [journal-ui](../lookup/journal-ui.md)、[engine-syntax](../lookup/engine-syntax.md) |
 | 文化团结度日志（团结条 + 人口文化转化）：新建或修改时读 | [cohesion-journal](../references/cohesion-journal.md) | — |
 | 语法、作用域、覆盖原版 | [script-safety](../references/script-safety.md) | [engine-syntax](../lookup/engine-syntax.md)、[engine-facts](../lookup/engine-facts.md) |
+| 外交博弈、战争目标（settings、valid、on_enforced、目标被作废） | [content-design](../references/content-design.md) “哪类文件拥有这个行为”表 | [engine-facts](../lookup/engine-facts.md) §外交、战争与条约 |
 | 数值、成本、奖励节奏 | [numeric-scale-contract](../references/numeric-scale-contract.md) | [numeric-facts](../lookup/numeric-facts.md) |
 | 设计 AI 倾向、`ai_chance`、AI 策略、秘密目标时读 | [ai-behavior](../references/ai-behavior.md) | — |
 | 政治目标、IG、合法性、党派 | [political-design-and-difficulty](../references/political-design-and-difficulty.md) | [engine-facts](../lookup/engine-facts.md) §政治 |
